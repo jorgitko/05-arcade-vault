@@ -1,6 +1,6 @@
 # SPEC 01 — MVP Arcade Vault
 
-**Estado:** Approved  
+**Estado:** Implemented  
 **Fecha:** 2026-09-14  
 **Dependencias:** ninguna
 
@@ -238,21 +238,21 @@ export interface SavedScore {
 
 ## Acceptance Criteria
 
-- [ ] Ruta `/` muestra biblioteca 8 juegos con covers CSS
-- [ ] Filtros búsqueda + categoría funcionan
-- [ ] Click card navega `/juego/[id]` correcto
-- [ ] Detalle muestra info juego + leaderboard 12 filas
-- [ ] Botón "JUGAR AHORA" navega `/jugar/[id]`
-- [ ] Player muestra CRT + mensaje "NO IMPLEMENTADO"
-- [ ] Modal Game Over aparece, acepta nombre, simula guardar
-- [ ] `/auth` muestra tabs login/registro, submit guarda user localStorage
-- [ ] `/salon` muestra podium + tabla, tabs juegos switch data
-- [ ] Navbar: logo navega home, links active state, auth button toggle user
-- [ ] Mobile <840px: hamburger menu funciona, layouts stack
-- [ ] Efectos neon visibles en títulos, scores, botones
-- [ ] Flicker animation en hero title
-- [ ] TypeScript compila sin errores
-- [ ] No warnings console en runtime
+- [x] Ruta `/` muestra biblioteca 8 juegos con covers CSS
+- [x] Filtros búsqueda + categoría funcionan
+- [x] Click card navega `/juego/[id]` correcto
+- [x] Detalle muestra info juego + leaderboard 12 filas
+- [x] Botón "JUGAR AHORA" navega `/jugar/[id]`
+- [x] Player muestra CRT + mensaje "NO IMPLEMENTADO"
+- [x] Modal Game Over aparece, acepta nombre, simula guardar
+- [x] `/auth` muestra tabs login/registro, submit guarda user localStorage
+- [x] `/salon` muestra podium + tabla, tabs juegos switch data
+- [x] Navbar: logo navega home, links active state, auth button toggle user
+- [x] Mobile <840px: hamburger menu funciona, layouts stack
+- [x] Efectos neon visibles en títulos, scores, botones
+- [x] Flicker animation en hero title
+- [x] TypeScript compila sin errores
+- [x] No warnings console en runtime
 
 ## Decisiones Tomadas
 
