@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import type { User } from '@/lib/types';
 import styles from '@/styles/arcade.module.css';
@@ -13,6 +13,7 @@ interface NavProps {
 
 export default function Nav({ user, onSignOut }: NavProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isActive = (path: string) => pathname === path;
@@ -57,9 +58,12 @@ export default function Nav({ user, onSignOut }: NavProps) {
               {user.name}
             </button>
           ) : (
-            <Link href="/auth" className={styles.btn}>
+            <button
+              className={styles.btn}
+              onClick={() => { window.location.href = '/auth'; }}
+            >
               INICIAR SESIÓN
-            </Link>
+            </button>
           )}
         </div>
 
