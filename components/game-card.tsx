@@ -21,8 +21,8 @@ export default function GameCard({ game }: GameCardProps) {
 
       <div className={styles.row}>
         <div className={styles['score-badge']}>
-          <span>MEJOR</span>
-          <b>{game.best.toLocaleString()}</b>
+          <span>MEJOR PUNTUACIÓN</span>
+          <b>{game.best.toLocaleString('es-ES')}</b>
         </div>
 
         <button className={`${styles.btn} ${styles[game.color]}`}>
