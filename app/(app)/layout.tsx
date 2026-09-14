@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
+import AppWrapper from '@/components/app-wrapper';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
-  return children;
+  return <AppWrapper>{children}</AppWrapper>;
 }
