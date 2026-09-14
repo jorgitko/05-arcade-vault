@@ -6,6 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Arcade Vault: plataforma online para juegos arcade con sistema de puntuación competitiva.
 
+## Skills
+Usa siempre /frontend-design para diseñar la interfaz de usuario
+
 ## Architecture
 
 ### Next.js App Router (16.3.5)
