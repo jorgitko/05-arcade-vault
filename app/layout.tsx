@@ -24,7 +24,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${pressStart.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        {children}
+      </body>
     </html>
   );
 }

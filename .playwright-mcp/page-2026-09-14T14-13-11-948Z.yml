@@ -1,0 +1,127 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "ARCADE VAULT" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - generic [ref=e6]:
+      - link "BIBLIOTECA" [ref=e7] [cursor=pointer]:
+        - /url: /
+      - link "SALÓN DE LA FAMA" [ref=e8] [cursor=pointer]:
+        - /url: /salon
+    - generic [ref=e9]: "03"
+    - button "INICIAR SESIÓN" [ref=e13] [cursor=pointer]
+  - generic [ref=e14]:
+    - link "BIBLIOTECA" [ref=e15] [cursor=pointer]:
+      - /url: /
+    - link "SALÓN DE LA FAMA" [ref=e16] [cursor=pointer]:
+      - /url: /salon
+    - link "INICIAR SESIÓN" [ref=e18] [cursor=pointer]:
+      - /url: /auth
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - heading "ARCADE VAULT" [level=1] [ref=e21]
+      - paragraph [ref=e22]: INSERTA UNA MONEDA PARA JUGAR _
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]: ⌕
+        - textbox "Buscar un juego por nombre…" [ref=e26]
+      - generic [ref=e27]:
+        - button "TODOS" [ref=e28] [cursor=pointer]
+        - button "ARCADE" [ref=e29] [cursor=pointer]
+        - button "PUZZLE" [ref=e30] [cursor=pointer]
+        - button "SHOOTER" [ref=e31] [cursor=pointer]
+        - button "VERSUS" [ref=e32] [cursor=pointer]
+    - generic [ref=e33]:
+      - link "ARCADE Bloque Buster Rompe todos los bloques con la pelota MEJOR PUNTUACIÓN 45.820 JUGAR" [ref=e34] [cursor=pointer]:
+        - /url: /juego/bloque-buster
+        - generic [ref=e35]: ARCADE
+        - generic [ref=e38]:
+          - heading "Bloque Buster" [level=3] [ref=e39]
+          - paragraph [ref=e40]: Rompe todos los bloques con la pelota
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - generic [ref=e43]: MEJOR PUNTUACIÓN
+            - generic [ref=e44]: "45.820"
+          - button "JUGAR" [ref=e45]
+      - link "PUZZLE Caída Encaja piezas que caen del cielo MEJOR PUNTUACIÓN 98.340 JUGAR" [ref=e46] [cursor=pointer]:
+        - /url: /juego/caida
+        - generic [ref=e47]: PUZZLE
+        - generic [ref=e50]:
+          - heading "Caída" [level=3] [ref=e51]
+          - paragraph [ref=e52]: Encaja piezas que caen del cielo
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - generic [ref=e55]: MEJOR PUNTUACIÓN
+            - generic [ref=e56]: "98.340"
+          - button "JUGAR" [ref=e57]
+      - link "ARCADE Serpentina Come, crece y no te muerdas la cola MEJOR PUNTUACIÓN 23.450 JUGAR" [ref=e58] [cursor=pointer]:
+        - /url: /juego/serpentina
+        - generic [ref=e59]: ARCADE
+        - generic [ref=e62]:
+          - heading "Serpentina" [level=3] [ref=e63]
+          - paragraph [ref=e64]: Come, crece y no te muerdas la cola
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]: MEJOR PUNTUACIÓN
+            - generic [ref=e68]: "23.450"
+          - button "JUGAR" [ref=e69]
+      - link "••• ARCADE Glotón Escapa de los fantasmas en el laberinto MEJOR PUNTUACIÓN 67.890 JUGAR" [ref=e70] [cursor=pointer]:
+        - /url: /juego/gloton
+        - generic [ref=e71]:
+          - generic [ref=e72]: •••
+          - generic [ref=e73]: ARCADE
+        - generic [ref=e74]:
+          - heading "Glotón" [level=3] [ref=e75]
+          - paragraph [ref=e76]: Escapa de los fantasmas en el laberinto
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: MEJOR PUNTUACIÓN
+            - generic [ref=e80]: "67.890"
+          - button "JUGAR" [ref=e81]
+      - link "SHOOTER Invasores Defiende la tierra de alienígenas MEJOR PUNTUACIÓN 54.320 JUGAR" [ref=e82] [cursor=pointer]:
+        - /url: /juego/invasores
+        - generic [ref=e83]: SHOOTER
+        - generic [ref=e86]:
+          - heading "Invasores" [level=3] [ref=e87]
+          - paragraph [ref=e88]: Defiende la tierra de alienígenas
+        - generic [ref=e89]:
+          - generic [ref=e90]:
+            - generic [ref=e91]: MEJOR PUNTUACIÓN
+            - generic [ref=e92]: "54.320"
+          - button "JUGAR" [ref=e93]
+      - link "▲ SHOOTER Rocas Destruye asteroides en el espacio MEJOR PUNTUACIÓN 41.200 JUGAR" [ref=e94] [cursor=pointer]:
+        - /url: /juego/rocas
+        - generic [ref=e95]:
+          - generic [ref=e96]: ▲
+          - generic [ref=e97]: SHOOTER
+        - generic [ref=e98]:
+          - heading "Rocas" [level=3] [ref=e99]
+          - paragraph [ref=e100]: Destruye asteroides en el espacio
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]: MEJOR PUNTUACIÓN
+            - generic [ref=e104]: "41.200"
+          - button "JUGAR" [ref=e105]
+      - link "ARCADE Ranaria Cruza el río sin caerte al agua MEJOR PUNTUACIÓN 31.560 JUGAR" [ref=e106] [cursor=pointer]:
+        - /url: /juego/ranaria
+        - generic [ref=e107]: ARCADE
+        - generic [ref=e110]:
+          - heading "Ranaria" [level=3] [ref=e111]
+          - paragraph [ref=e112]: Cruza el río sin caerte al agua
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - generic [ref=e115]: MEJOR PUNTUACIÓN
+            - generic [ref=e116]: "31.560"
+          - button "JUGAR" [ref=e117]
+      - link "VERSUS Duelo Pixel Tenis arcade de dos jugadores MEJOR PUNTUACIÓN 11 JUGAR" [ref=e118] [cursor=pointer]:
+        - /url: /juego/duelo-pixel
+        - generic [ref=e119]: VERSUS
+        - generic [ref=e122]:
+          - heading "Duelo Pixel" [level=3] [ref=e123]
+          - paragraph [ref=e124]: Tenis arcade de dos jugadores
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]: MEJOR PUNTUACIÓN
+            - generic [ref=e128]: "11"
+          - button "JUGAR" [ref=e129]
+  - button "Open Next.js Dev Tools" [ref=e135] [cursor=pointer]
+  - alert [ref=e139]
