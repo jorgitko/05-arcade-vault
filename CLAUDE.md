@@ -6,15 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Arcade Vault: plataforma online para juegos arcade con sistema de puntuación competitiva.
 
-## Development Commands
-
-```bash
-npm run dev    # Servidor desarrollo (puerto 3000)
-npm run build  # Build producción
-npm run start  # Servidor producción
-npm run lint   # ESLint check
-```
-
 ## Architecture
 
 ### Next.js App Router (16.3.5)
