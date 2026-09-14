@@ -1,0 +1,127 @@
+- generic [ref=f2e1]:
+  - navigation [ref=f2e2]:
+    - link "ARCADE VAULT" [ref=f2e3] [cursor=pointer]:
+      - /url: /
+    - generic [ref=f2e6]:
+      - link "BIBLIOTECA" [ref=f2e7] [cursor=pointer]:
+        - /url: /
+      - link "SALÓN DE LA FAMA" [ref=f2e8] [cursor=pointer]:
+        - /url: /salon
+    - generic [ref=f2e9]: "03"
+    - button "INICIAR SESIÓN" [ref=f2e13] [cursor=pointer]
+  - generic [ref=f2e14]:
+    - link "BIBLIOTECA" [ref=f2e15] [cursor=pointer]:
+      - /url: /
+    - link "SALÓN DE LA FAMA" [ref=f2e16] [cursor=pointer]:
+      - /url: /salon
+    - link "INICIAR SESIÓN" [ref=f2e18] [cursor=pointer]:
+      - /url: /auth
+  - main [ref=f2e19]:
+    - generic [ref=f2e20]:
+      - heading "ARCADE VAULT" [level=1] [ref=f2e21]
+      - paragraph [ref=f2e22]: INSERTA UNA MONEDA PARA JUGAR _
+    - generic [ref=f2e23]:
+      - generic [ref=f2e24]:
+        - generic [ref=f2e25]: ⌕
+        - textbox "Buscar un juego por nombre…" [ref=f2e26]
+      - generic [ref=f2e27]:
+        - button "TODOS" [active] [ref=f2e28] [cursor=pointer]
+        - button "ARCADE" [ref=f2e29] [cursor=pointer]
+        - button "PUZZLE" [ref=f2e30] [cursor=pointer]
+        - button "SHOOTER" [ref=f2e31] [cursor=pointer]
+        - button "VERSUS" [ref=f2e32] [cursor=pointer]
+    - generic [ref=f2e33]:
+      - link "ARCADE Bloque Buster Rompe todos los bloques con la pelota MEJOR PUNTUACIÓN 45.820 JUGAR" [ref=f2e155] [cursor=pointer]:
+        - /url: /juego/bloque-buster
+        - generic [ref=f2e156]: ARCADE
+        - generic [ref=f2e159]:
+          - heading "Bloque Buster" [level=3] [ref=f2e160]
+          - paragraph [ref=f2e161]: Rompe todos los bloques con la pelota
+        - generic [ref=f2e162]:
+          - generic [ref=f2e163]:
+            - generic [ref=f2e164]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e165]: "45.820"
+          - button "JUGAR" [ref=f2e166]
+      - link "PUZZLE Caída Encaja piezas que caen del cielo MEJOR PUNTUACIÓN 98.340 JUGAR" [ref=f2e143] [cursor=pointer]:
+        - /url: /juego/caida
+        - generic [ref=f2e144]: PUZZLE
+        - generic [ref=f2e147]:
+          - heading "Caída" [level=3] [ref=f2e148]
+          - paragraph [ref=f2e149]: Encaja piezas que caen del cielo
+        - generic [ref=f2e150]:
+          - generic [ref=f2e151]:
+            - generic [ref=f2e152]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e153]: "98.340"
+          - button "JUGAR" [ref=f2e154]
+      - link "ARCADE Serpentina Come, crece y no te muerdas la cola MEJOR PUNTUACIÓN 23.450 JUGAR" [ref=f2e167] [cursor=pointer]:
+        - /url: /juego/serpentina
+        - generic [ref=f2e168]: ARCADE
+        - generic [ref=f2e171]:
+          - heading "Serpentina" [level=3] [ref=f2e172]
+          - paragraph [ref=f2e173]: Come, crece y no te muerdas la cola
+        - generic [ref=f2e174]:
+          - generic [ref=f2e175]:
+            - generic [ref=f2e176]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e177]: "23.450"
+          - button "JUGAR" [ref=f2e178]
+      - link "••• ARCADE Glotón Escapa de los fantasmas en el laberinto MEJOR PUNTUACIÓN 67.890 JUGAR" [ref=f2e179] [cursor=pointer]:
+        - /url: /juego/gloton
+        - generic [ref=f2e180]:
+          - generic [ref=f2e181]: •••
+          - generic [ref=f2e182]: ARCADE
+        - generic [ref=f2e183]:
+          - heading "Glotón" [level=3] [ref=f2e184]
+          - paragraph [ref=f2e185]: Escapa de los fantasmas en el laberinto
+        - generic [ref=f2e186]:
+          - generic [ref=f2e187]:
+            - generic [ref=f2e188]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e189]: "67.890"
+          - button "JUGAR" [ref=f2e190]
+      - link "SHOOTER Invasores Defiende la tierra de alienígenas MEJOR PUNTUACIÓN 54.320 JUGAR" [ref=f2e191] [cursor=pointer]:
+        - /url: /juego/invasores
+        - generic [ref=f2e192]: SHOOTER
+        - generic [ref=f2e195]:
+          - heading "Invasores" [level=3] [ref=f2e196]
+          - paragraph [ref=f2e197]: Defiende la tierra de alienígenas
+        - generic [ref=f2e198]:
+          - generic [ref=f2e199]:
+            - generic [ref=f2e200]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e201]: "54.320"
+          - button "JUGAR" [ref=f2e202]
+      - link "▲ SHOOTER Rocas Destruye asteroides en el espacio MEJOR PUNTUACIÓN 41.200 JUGAR" [ref=f2e203] [cursor=pointer]:
+        - /url: /juego/rocas
+        - generic [ref=f2e204]:
+          - generic [ref=f2e205]: ▲
+          - generic [ref=f2e206]: SHOOTER
+        - generic [ref=f2e207]:
+          - heading "Rocas" [level=3] [ref=f2e208]
+          - paragraph [ref=f2e209]: Destruye asteroides en el espacio
+        - generic [ref=f2e210]:
+          - generic [ref=f2e211]:
+            - generic [ref=f2e212]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e213]: "41.200"
+          - button "JUGAR" [ref=f2e214]
+      - link "ARCADE Ranaria Cruza el río sin caerte al agua MEJOR PUNTUACIÓN 31.560 JUGAR" [ref=f2e215] [cursor=pointer]:
+        - /url: /juego/ranaria
+        - generic [ref=f2e216]: ARCADE
+        - generic [ref=f2e219]:
+          - heading "Ranaria" [level=3] [ref=f2e220]
+          - paragraph [ref=f2e221]: Cruza el río sin caerte al agua
+        - generic [ref=f2e222]:
+          - generic [ref=f2e223]:
+            - generic [ref=f2e224]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e225]: "31.560"
+          - button "JUGAR" [ref=f2e226]
+      - link "VERSUS Duelo Pixel Tenis arcade de dos jugadores MEJOR PUNTUACIÓN 11 JUGAR" [ref=f2e227] [cursor=pointer]:
+        - /url: /juego/duelo-pixel
+        - generic [ref=f2e228]: VERSUS
+        - generic [ref=f2e231]:
+          - heading "Duelo Pixel" [level=3] [ref=f2e232]
+          - paragraph [ref=f2e233]: Tenis arcade de dos jugadores
+        - generic [ref=f2e234]:
+          - generic [ref=f2e235]:
+            - generic [ref=f2e236]: MEJOR PUNTUACIÓN
+            - generic [ref=f2e237]: "11"
+          - button "JUGAR" [ref=f2e238]
+  - button "Open Next.js Dev Tools" [ref=f2e135] [cursor=pointer]
+  - alert [ref=f2e139]
