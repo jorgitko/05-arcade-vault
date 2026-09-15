@@ -11,6 +11,7 @@ Implementar MVP visual de Arcade Vault: todas pantallas del prototype (bibliotec
 ## Scope
 
 ### Incluido
+
 - **5 rutas navegables:**
   - `/` — biblioteca juegos (home) con filtros + búsqueda
   - `/juego/[id]` — detalle juego con leaderboard
@@ -30,6 +31,7 @@ Implementar MVP visual de Arcade Vault: todas pantallas del prototype (bibliotec
 - **TypeScript:** strict mode, tipos completos
 
 ### NO incluido
+
 - Implementación real de juegos (player muestra mensaje "NO IMPLEMENTADO")
 - Backend auth (formulario solo visual)
 - API persistence (solo localStorage)
@@ -49,13 +51,13 @@ export type GameCategory = 'ARCADE' | 'PUZZLE' | 'SHOOTER' | 'VERSUS';
 export interface Game {
   id: string;
   title: string;
-  short: string;      // descripción breve
-  long: string;       // descripción larga
+  short: string; // descripción breve
+  long: string; // descripción larga
   cat: GameCategory;
-  cover: string;      // clase CSS cover (ej: 'cover-bricks')
+  cover: string; // clase CSS cover (ej: 'cover-bricks')
   color: 'cyan' | 'magenta' | 'yellow' | 'green';
-  best: number;       // mejor puntuación
-  plays: string;      // ej: '12.4K'
+  best: number; // mejor puntuación
+  plays: string; // ej: '12.4K'
 }
 
 export interface User {
@@ -73,7 +75,7 @@ export interface ScoreEntry {
 export interface SavedScore {
   gameId: string;
   score: number;
-  at: number;         // timestamp
+  at: number; // timestamp
 }
 ```
 
@@ -92,6 +94,7 @@ export interface SavedScore {
 ## Implementation Plan
 
 ### 1. Estructura base + configuración
+
 - Crear route group `app/(app)/`
 - Layout route group con fonts Google (Press Start 2P, JetBrains Mono)
 - Actualizar root layout: quitar Geist, importar fonts arcade
@@ -99,6 +102,7 @@ export interface SavedScore {
 - Crear `lib/data.ts` con GAMES array + helpers
 
 ### 2. Sistema diseño arcade
+
 - Extraer `references/templates/styles.css` → `styles/arcade.module.css`
 - Mantener: variables CSS, covers, botones, cards, tabla, modal, CRT
 - Incluir: neon glow classes, flicker animation, responsive breakpoints
@@ -106,6 +110,7 @@ export interface SavedScore {
 - Importar module en components que lo necesiten
 
 ### 3. Navbar component
+
 - `components/nav.tsx` client component
 - Logo (logo-mark + texto "ARCADE VAULT")
 - Links: Biblioteca, Salón de la Fama (active state)
@@ -116,6 +121,7 @@ export interface SavedScore {
 - Props: user, onSignOut
 
 ### 4. Biblioteca (home) — `/`
+
 - `app/(app)/page.tsx`
 - Hero: título "ARCADE VAULT" con flicker + subtítulo
 - Filtros: searchbar + chips categorías
@@ -131,6 +137,7 @@ export interface SavedScore {
 - Filtrado: coincidencia title + categoría
 
 ### 5. Detalle juego — `/juego/[id]`
+
 - `app/(app)/juego/[id]/page.tsx`
 - Validar id existe en GAMES (notFound si no)
 - Layout 2 columnas (1.4fr 1fr), responsive stack mobile
@@ -148,6 +155,7 @@ export interface SavedScore {
   - Top 3 con colores oro/plata/bronce
 
 ### 6. Player — `/jugar/[id]`
+
 - `app/(app)/jugar/[id]/page.tsx`
 - Validar id existe (notFound si no)
 - HUD arriba: score / vidas / nivel (valores mock fijos)
@@ -169,6 +177,7 @@ export interface SavedScore {
   - Toast "Score guardado" después guardar
 
 ### 7. Auth — `/auth`
+
 - `app/(app)/auth/page.tsx`
 - Card centrado (max-width 440px)
 - Header: logo-mark + título "ARCADE VAULT"
@@ -184,6 +193,7 @@ export interface SavedScore {
 - Sin validación real backend
 
 ### 8. Salón fama — `/salon`
+
 - `app/(app)/salon/page.tsx`
 - Header: título gradient "SALÓN DE LA FAMA" + subtítulo
 - Tabs juegos (chips): selecciona gameId activo
@@ -200,6 +210,7 @@ export interface SavedScore {
 - Botón "VOLVER A LA BIBLIOTECA"
 
 ### 9. Integración navegación
+
 - Navbar en layout grupo con client boundary
 - User state: Context provider o prop drilling desde root layout client wrapper
 - localStorage helpers: `lib/storage.ts`
@@ -209,6 +220,7 @@ export interface SavedScore {
 - Sign out: clear localStorage + navegar home
 
 ### 10. Responsive final pass
+
 - Verificar breakpoints 840px (hamburger, hide contador) y 720px (tabla compact)
 - Grid biblioteca: auto-fill minmax(280px, 1fr)
 - Detalle: stack columnas <900px
@@ -216,6 +228,7 @@ export interface SavedScore {
 - Padding lateral ajustado mobile (32px → 16px)
 
 ### 11. Polish efectos neon
+
 - Text-shadow neon en:
   - Logo navbar
   - Títulos pixel principales
@@ -226,6 +239,7 @@ export interface SavedScore {
 - Verificar contraste accesible
 
 ### 12. Verificación completa
+
 - Navegar todas rutas manualmente
 - Filtros biblioteca: query + categoría
 - Detalle: validar notFound

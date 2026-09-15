@@ -31,10 +31,7 @@ export default function Nav({ user, onSignOut }: NavProps) {
         </Link>
 
         <div className={styles.links}>
-          <Link
-            href="/"
-            className={isActive('/') ? styles.active : ''}
-          >
+          <Link href="/" className={isActive('/') ? styles.active : ''}>
             BIBLIOTECA
           </Link>
           <Link
@@ -60,7 +57,9 @@ export default function Nav({ user, onSignOut }: NavProps) {
           ) : (
             <button
               className={styles.btn}
-              onClick={() => { window.location.href = '/auth'; }}
+              onClick={() => {
+                window.location.href = '/auth';
+              }}
             >
               INICIAR SESIÓN
             </button>
@@ -82,7 +81,9 @@ export default function Nav({ user, onSignOut }: NavProps) {
       />
 
       {/* Mobile panel */}
-      <div className={`${styles['av-mobile-panel']} ${mobileOpen ? styles.open : ''}`}>
+      <div
+        className={`${styles['av-mobile-panel']} ${mobileOpen ? styles.open : ''}`}
+      >
         <Link
           href="/"
           className={isActive('/') ? styles.active : ''}

@@ -53,8 +53,18 @@ export default function HomePage() {
           <GameCard key={game.id} game={game} />
         ))}
         {filtered.length === 0 && (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '80px 20px', color: 'var(--ink-faint)' }}>
-            <div className={`${styles.pixel} ${styles['neon-magenta']}`} style={{ fontSize: '14px', marginBottom: '12px' }}>
+          <div
+            style={{
+              gridColumn: '1 / -1',
+              textAlign: 'center',
+              padding: '80px 20px',
+              color: 'var(--ink-faint)',
+            }}
+          >
+            <div
+              className={`${styles.pixel} ${styles['neon-magenta']}`}
+              style={{ fontSize: '14px', marginBottom: '12px' }}
+            >
               NO HAY RESULTADOS
             </div>
             <div>Intenta otra búsqueda o categoría.</div>

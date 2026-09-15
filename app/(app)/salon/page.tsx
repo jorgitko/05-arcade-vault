@@ -46,14 +46,13 @@ export default function HallOfFamePage() {
       <div className={styles.podium}>
         {podiumOrder.map((entry, idx) => {
           const slotClass =
-            idx === 1
-              ? styles.gold
-              : idx === 0
-              ? styles.silver
-              : styles.bronze;
+            idx === 1 ? styles.gold : idx === 0 ? styles.silver : styles.bronze;
 
           return (
-            <div key={entry.rank} className={`${styles['podium-slot']} ${slotClass}`}>
+            <div
+              key={entry.rank}
+              className={`${styles['podium-slot']} ${slotClass}`}
+            >
               <div className={styles['rank-num']}>
                 #{entry.rank.toString().padStart(2, '0')}
               </div>
@@ -79,10 +78,10 @@ export default function HallOfFamePage() {
             entry.rank === 1
               ? styles.top1
               : entry.rank === 2
-              ? styles.top2
-              : entry.rank === 3
-              ? styles.top3
-              : '';
+                ? styles.top2
+                : entry.rank === 3
+                  ? styles.top3
+                  : '';
 
           return (
             <div
@@ -90,7 +89,9 @@ export default function HallOfFamePage() {
               className={`${styles.tr} ${topClass}`}
               style={{ animationDelay: `${entry.rank * 40}ms` }}
             >
-              <span className={styles.rk}>#{entry.rank.toString().padStart(2, '0')}</span>
+              <span className={styles.rk}>
+                #{entry.rank.toString().padStart(2, '0')}
+              </span>
               <span className={styles.pl}>{entry.name}</span>
               <span className={styles.sc}>{entry.score.toLocaleString()}</span>
               <span className={styles.dt}>{entry.date}</span>

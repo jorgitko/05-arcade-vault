@@ -25,9 +25,7 @@ export default function GameCard({ game }: GameCardProps) {
           <b>{game.best.toLocaleString('es-ES')}</b>
         </div>
 
-        <button className={`${styles.btn} ${styles[game.color]}`}>
-          JUGAR
-        </button>
+        <button className={`${styles.btn} ${styles[game.color]}`}>JUGAR</button>
       </div>
     </Link>
   );

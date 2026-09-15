@@ -104,12 +104,8 @@ export default function AuthPage() {
         <div className={styles['auth-divider']}>O CONTINUAR CON</div>
 
         <div className={styles.social}>
-          <button className={`${styles.btn} ${styles.ghost}`}>
-            GOOGLE
-          </button>
-          <button className={`${styles.btn} ${styles.ghost}`}>
-            DISCORD
-          </button>
+          <button className={`${styles.btn} ${styles.ghost}`}>GOOGLE</button>
+          <button className={`${styles.btn} ${styles.ghost}`}>DISCORD</button>
         </div>
       </div>
     </div>

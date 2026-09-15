@@ -73,9 +73,7 @@ export default function PlayerPage({ params }: PageProps) {
           >
             SIMULAR GAME OVER
           </button>
-          <button className={`${styles.btn} ${styles.ghost}`}>
-            PAUSA
-          </button>
+          <button className={`${styles.btn} ${styles.ghost}`}>PAUSA</button>
           <button
             className={`${styles.btn} ${styles.magenta}`}
             onClick={() => router.push(`/juego/${game.id}`)}
@@ -118,7 +116,9 @@ export default function PlayerPage({ params }: PageProps) {
                     placeholder="Tu nombre..."
                     maxLength={20}
                     value={playerName}
-                    onChange={(e) => setPlayerName(e.target.value.toUpperCase())}
+                    onChange={(e) =>
+                      setPlayerName(e.target.value.toUpperCase())
+                    }
                     autoFocus
                   />
                 </div>
@@ -140,9 +140,7 @@ export default function PlayerPage({ params }: PageProps) {
                 </div>
               </>
             ) : (
-              <div className={styles['toast-saved']}>
-                ✓ SCORE GUARDADO
-              </div>
+              <div className={styles['toast-saved']}>✓ SCORE GUARDADO</div>
             )}
           </div>
         </div>

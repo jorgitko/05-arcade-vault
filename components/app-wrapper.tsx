@@ -28,9 +28,7 @@ export default function AppWrapper({ children }: AppWrapperProps) {
   return (
     <>
       <Nav user={user} onSignOut={handleSignOut} />
-      <main style={{ flex: 1 }}>
-        {children}
-      </main>
+      <main style={{ flex: 1 }}>{children}</main>
     </>
   );
 }

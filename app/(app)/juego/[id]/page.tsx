@@ -68,7 +68,9 @@ export default async function GameDetailPage({ params }: PageProps) {
       </div>
 
       {/* Leaderboard */}
-      <div style={{ maxWidth: '1320px', margin: '0 auto 80px', padding: '0 32px' }}>
+      <div
+        style={{ maxWidth: '1320px', margin: '0 auto 80px', padding: '0 32px' }}
+      >
         <div className={styles.leaderboard}>
           <h3>TOP JUGADORES — {game.title.toUpperCase()}</h3>
           {scores.map((entry) => {
@@ -76,16 +78,23 @@ export default async function GameDetailPage({ params }: PageProps) {
               entry.rank === 1
                 ? styles.top1
                 : entry.rank === 2
-                ? styles.top2
-                : entry.rank === 3
-                ? styles.top3
-                : '';
+                  ? styles.top2
+                  : entry.rank === 3
+                    ? styles.top3
+                    : '';
 
             return (
-              <div key={entry.rank} className={`${styles['lb-row']} ${topClass}`}>
-                <span className={styles.rk}>#{entry.rank.toString().padStart(2, '0')}</span>
+              <div
+                key={entry.rank}
+                className={`${styles['lb-row']} ${topClass}`}
+              >
+                <span className={styles.rk}>
+                  #{entry.rank.toString().padStart(2, '0')}
+                </span>
                 <span className={styles.pl}>{entry.name}</span>
-                <span className={styles.sc}>{entry.score.toLocaleString()}</span>
+                <span className={styles.sc}>
+                  {entry.score.toLocaleString()}
+                </span>
               </div>
             );
           })}

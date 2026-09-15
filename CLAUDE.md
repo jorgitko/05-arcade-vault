@@ -7,22 +7,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Arcade Vault: plataforma online para juegos arcade con sistema de puntuación competitiva.
 
 ## Skills
+
 Usa siempre /frontend-design para diseñar la interfaz de usuario
 
 ## Architecture
 
 ### Next.js App Router (16.3.5)
+
 - **CRÍTICO**: Next.js 16+ tiene breaking changes vs training data
 - Antes de escribir código: leer `node_modules/next/dist/docs/` relevante
 - App Router en `/app` (no `pages/`)
 - TypeScript + React Server Components por defecto
 
 ### Path Aliases
+
 ```typescript
 @/* → raíz proyecto (ej: @/app/page.tsx)
 ```
 
 ### Stack
+
 - Next.js 16.3.5 + React 19
 - TypeScript strict mode
 - Tailwind CSS 4 (PostCSS)
@@ -31,6 +35,7 @@ Usa siempre /frontend-design para diseñar la interfaz de usuario
 ## Spec Driven Design
 
 Proyecto sigue Spec Driven Design:
+
 1. Usar `/spec` para crear especificación antes de implementar
 2. Usar `/spec-impl` para implementar desde spec
 3. Skills base: `npx skills@latest add Klerith/fernando-skills`

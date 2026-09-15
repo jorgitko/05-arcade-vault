@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "AfterWrite": "npm run format -- \"$HOOK_FILE\" && npm run lint:fix -- \"$HOOK_FILE\""
+  }
+}

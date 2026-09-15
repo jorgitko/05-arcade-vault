@@ -91,7 +91,13 @@ export const GAMES: Game[] = [
   },
 ];
 
-export const CATEGORIES: string[] = ['TODOS', 'ARCADE', 'PUZZLE', 'SHOOTER', 'VERSUS'];
+export const CATEGORIES: string[] = [
+  'TODOS',
+  'ARCADE',
+  'PUZZLE',
+  'SHOOTER',
+  'VERSUS',
+];
 
 export const PLAYERS: string[] = [
   'ACE',
@@ -114,10 +120,14 @@ export const PLAYERS: string[] = [
   'RAZOR',
 ];
 
-export function seededScores(seed: string | number, count: number = 12): ScoreEntry[] {
-  const seedNum = typeof seed === 'string'
-    ? seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    : seed;
+export function seededScores(
+  seed: string | number,
+  count: number = 12
+): ScoreEntry[] {
+  const seedNum =
+    typeof seed === 'string'
+      ? seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      : seed;
 
   const rng = (n: number) => {
     const x = Math.sin(n) * 10000;
@@ -136,7 +146,7 @@ export function seededScores(seed: string | number, count: number = 12): ScoreEn
 
     usedNames.add(name);
 
-    const baseScore = 100000 - (i * 5000);
+    const baseScore = 100000 - i * 5000;
     const variance = Math.floor(rng(seedNum + i * 13) * 3000);
     const score = baseScore + variance;
 
@@ -153,8 +163,10 @@ export function seededScores(seed: string | number, count: number = 12): ScoreEn
     });
   }
 
-  return entries.sort((a, b) => b.score - a.score).map((entry, idx) => ({
-    ...entry,
-    rank: idx + 1,
-  }));
+  return entries
+    .sort((a, b) => b.score - a.score)
+    .map((entry, idx) => ({
+      ...entry,
+      rank: idx + 1,
+    }));
 }
