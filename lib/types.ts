@@ -12,9 +12,28 @@ export interface Game {
   plays: string; // ej: '12.4K'
 }
 
+/** Fila de la tabla `users`. El email vive en auth.users, no aquí. */
 export interface User {
+  id: string; // UUID, mismo id que auth.users
   name: string;
-  email: string;
+  created_at: string;
+}
+
+/** Fila de la tabla `scores`. */
+export interface DbScore {
+  id: string;
+  user_id: string;
+  game_id: string;
+  score: number;
+  created_at: string;
+}
+
+/** Entrada ya rankeada, lista para pintar en un leaderboard. */
+export interface LeaderboardEntry {
+  rank: number;
+  user_name: string;
+  score: number;
+  date: string;
 }
 
 export interface ScoreEntry {
