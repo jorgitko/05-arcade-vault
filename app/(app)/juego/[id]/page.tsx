@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { GAMES } from '@/lib/data';
-import { seededScores } from '@/lib/data';
+import GameLeaderboard from '@/components/game-leaderboard';
 import styles from '@/styles/arcade.module.css';
 
 interface PageProps {
@@ -15,8 +15,6 @@ export default async function GameDetailPage({ params }: PageProps) {
   if (!game) {
     notFound();
   }
-
-  const scores = seededScores(game.id, 12);
 
   return (
     <>
@@ -71,34 +69,7 @@ export default async function GameDetailPage({ params }: PageProps) {
       <div
         style={{ maxWidth: '1320px', margin: '0 auto 80px', padding: '0 32px' }}
       >
-        <div className={styles.leaderboard}>
-          <h3>TOP JUGADORES — {game.title.toUpperCase()}</h3>
-          {scores.map((entry) => {
-            const topClass =
-              entry.rank === 1
-                ? styles.top1
-                : entry.rank === 2
-                  ? styles.top2
-                  : entry.rank === 3
-                    ? styles.top3
-                    : '';
-
-            return (
-              <div
-                key={entry.rank}
-                className={`${styles['lb-row']} ${topClass}`}
-              >
-                <span className={styles.rk}>
-                  #{entry.rank.toString().padStart(2, '0')}
-                </span>
-                <span className={styles.pl}>{entry.name}</span>
-                <span className={styles.sc}>
-                  {entry.score.toLocaleString()}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+        <GameLeaderboard gameId={game.id} gameTitle={game.title} />
       </div>
     </>
   );

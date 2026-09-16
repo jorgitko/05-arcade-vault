@@ -1,27 +1,72 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GAMES } from '@/lib/data';
-import { seededScores } from '@/lib/data';
-import { getUser } from '@/lib/storage';
-import type { User } from '@/lib/types';
 import Link from 'next/link';
+import { GAMES } from '@/lib/data';
+import { getLeaderboard, getUserBest } from '@/lib/queries';
+import { useAuth } from '@/lib/auth-context';
+import { rankClass } from '@/components/game-leaderboard';
+import type { LeaderboardEntry } from '@/lib/types';
 import styles from '@/styles/arcade.module.css';
+
+type UserBest = { score: number; date: string } | null;
+
+interface LoadedBoard {
+  gameId: string;
+  entries: LeaderboardEntry[];
+}
 
 export default function HallOfFamePage() {
   const [selectedGame, setSelectedGame] = useState(GAMES[0].id);
-  const [user, setUser] = useState<User | null>(null);
+  const [board, setBoard] = useState<LoadedBoard | null>(null);
+  const [userBest, setUserBest] = useState<UserBest>(null);
+  const { user } = useAuth();
+
+  // El tablero cargado lleva su gameId, así el cambio de pestaña muestra
+  // "cargando" sin necesidad de un setState extra dentro del effect.
+  const loading = board?.gameId !== selectedGame;
+  const entries = loading ? [] : board!.entries;
 
   useEffect(() => {
-    const stored = getUser();
-    setUser(stored);
-  }, []);
+    let active = true;
 
-  const game = GAMES.find((g) => g.id === selectedGame) || GAMES[0];
-  const scores = seededScores(selectedGame, 12);
+    const load = async () => {
+      const entries = await getLeaderboard(selectedGame).catch(() => []);
+      if (active) setBoard({ gameId: selectedGame, entries });
+    };
+    load();
 
-  const top3 = scores.slice(0, 3);
-  const podiumOrder = [top3[1], top3[0], top3[2]]; // silver, gold, bronze
+    return () => {
+      active = false;
+    };
+  }, [selectedGame]);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      const best = user
+        ? await getUserBest(selectedGame, user.id).catch(() => null)
+        : null;
+      if (active) setUserBest(best);
+    };
+    load();
+
+    return () => {
+      active = false;
+    };
+  }, [selectedGame, user]);
+
+  // El podio solo tiene sentido con los tres primeros puestos cubiertos.
+  const podium =
+    entries.length >= 3
+      ? [entries[1], entries[0], entries[2]] // plata, oro, bronce
+      : [];
+
+  const podiumClass = (slot: number) => {
+    if (slot === 1) return styles.gold;
+    return slot === 0 ? styles.silver : styles.bronze;
+  };
 
   return (
     <div className={styles['av-hall']}>
@@ -42,29 +87,24 @@ export default function HallOfFamePage() {
         ))}
       </div>
 
-      {/* Podium */}
-      <div className={styles.podium}>
-        {podiumOrder.map((entry, idx) => {
-          const slotClass =
-            idx === 1 ? styles.gold : idx === 0 ? styles.silver : styles.bronze;
-
-          return (
+      {podium.length > 0 && (
+        <div className={styles.podium}>
+          {podium.map((entry, idx) => (
             <div
               key={entry.rank}
-              className={`${styles['podium-slot']} ${slotClass}`}
+              className={`${styles['podium-slot']} ${podiumClass(idx)}`}
             >
               <div className={styles['rank-num']}>
                 #{entry.rank.toString().padStart(2, '0')}
               </div>
-              <div className={styles.name}>{entry.name}</div>
+              <div className={styles.name}>{entry.user_name}</div>
               <div className={styles.score}>{entry.score.toLocaleString()}</div>
               <div className={styles.date}>{entry.date}</div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Full table */}
       <div className={styles['hall-table']}>
         <div className={styles.th}>
           <span>RANGO</span>
@@ -73,33 +113,31 @@ export default function HallOfFamePage() {
           <span>FECHA</span>
         </div>
 
-        {scores.map((entry) => {
-          const topClass =
-            entry.rank === 1
-              ? styles.top1
-              : entry.rank === 2
-                ? styles.top2
-                : entry.rank === 3
-                  ? styles.top3
-                  : '';
+        {loading && <p className={styles['lb-empty']}>CARGANDO...</p>}
 
-          return (
+        {!loading && entries.length === 0 && (
+          <p className={styles['lb-empty']}>
+            AÚN NO HAY PUNTUACIONES PARA ESTE JUEGO.
+          </p>
+        )}
+
+        {!loading &&
+          entries.map((entry) => (
             <div
               key={entry.rank}
-              className={`${styles.tr} ${topClass}`}
+              className={`${styles.tr} ${rankClass(entry.rank)}`}
               style={{ animationDelay: `${entry.rank * 40}ms` }}
             >
               <span className={styles.rk}>
                 #{entry.rank.toString().padStart(2, '0')}
               </span>
-              <span className={styles.pl}>{entry.name}</span>
+              <span className={styles.pl}>{entry.user_name}</span>
               <span className={styles.sc}>{entry.score.toLocaleString()}</span>
               <span className={styles.dt}>{entry.date}</span>
             </div>
-          );
-        })}
+          ))}
 
-        {user && (
+        {user && userBest && (
           <>
             <div className={`${styles.tr} ${styles['you-label']}`}>
               TU MEJOR MARCA
@@ -107,8 +145,10 @@ export default function HallOfFamePage() {
             <div className={`${styles.tr} ${styles.you}`}>
               <span className={styles.rk}>#--</span>
               <span className={styles.pl}>{user.name}</span>
-              <span className={styles.sc}>12,340</span>
-              <span className={styles.dt}>2026-09-14</span>
+              <span className={styles.sc}>
+                {userBest.score.toLocaleString()}
+              </span>
+              <span className={styles.dt}>{userBest.date}</span>
             </div>
           </>
         )}
