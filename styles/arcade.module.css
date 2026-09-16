@@ -826,6 +826,14 @@
   border-bottom: 1px solid var(--line);
   letter-spacing: 0.14em;
 }
+.modal-player {
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-align: center;
+}
 .lb-empty {
   padding: 22px 16px;
   text-align: center;

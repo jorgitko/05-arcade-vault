@@ -3,7 +3,8 @@
 import { useState, use } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import { GAMES } from '@/lib/data';
-import { saveScore } from '@/lib/storage';
+import { saveScore } from '@/lib/queries';
+import { useAuth } from '@/lib/auth-context';
 import styles from '@/styles/arcade.module.css';
 
 interface PageProps {
@@ -14,10 +15,12 @@ export default function PlayerPage({ params }: PageProps) {
   const { id } = use(params);
   const game = GAMES.find((g) => g.id === id);
   const router = useRouter();
+  const { user } = useAuth();
 
   const [showModal, setShowModal] = useState(false);
-  const [playerName, setPlayerName] = useState('');
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   if (!game) {
     notFound();
@@ -25,26 +28,33 @@ export default function PlayerPage({ params }: PageProps) {
 
   const mockScore = 42680;
 
-  const handleSave = () => {
-    if (!playerName.trim()) return;
+  const handleSave = async () => {
+    if (!user) {
+      router.push('/auth');
+      return;
+    }
 
-    saveScore({
-      gameId: game.id,
-      score: mockScore,
-      at: Date.now(),
-    });
-
-    setSaved(true);
-
-    setTimeout(() => {
-      router.push(`/juego/${game.id}`);
-    }, 2000);
+    setError('');
+    setSaving(true);
+    try {
+      await saveScore(game.id, user.id, mockScore);
+      setSaved(true);
+      setTimeout(() => {
+        router.push(`/juego/${game.id}`);
+      }, 2000);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'No se pudo guardar el score'
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handlePlayAgain = () => {
     setShowModal(false);
     setSaved(false);
-    setPlayerName('');
+    setError('');
   };
 
   return (
@@ -111,25 +121,30 @@ export default function PlayerPage({ params }: PageProps) {
             {!saved ? (
               <>
                 <div className={styles['input-row']}>
-                  <input
-                    type="text"
-                    placeholder="Tu nombre..."
-                    maxLength={20}
-                    value={playerName}
-                    onChange={(e) =>
-                      setPlayerName(e.target.value.toUpperCase())
-                    }
-                    autoFocus
-                  />
+                  {user ? (
+                    <p className={styles['modal-player']}>
+                      JUGADOR: {user.name.toUpperCase()}
+                    </p>
+                  ) : (
+                    <p className={styles['modal-player']}>
+                      INICIA SESIÓN PARA GUARDAR TU PUNTUACIÓN
+                    </p>
+                  )}
                 </div>
+
+                {error && (
+                  <p className={styles['auth-error']} role="alert">
+                    {error}
+                  </p>
+                )}
 
                 <div className={styles.actions}>
                   <button
                     className={`${styles.btn} ${styles.magenta} ${styles.lg}`}
                     onClick={handleSave}
-                    disabled={!playerName.trim()}
+                    disabled={saving}
                   >
-                    GUARDAR Y SALIR
+                    {saving ? 'GUARDANDO...' : 'GUARDAR Y SALIR'}
                   </button>
                   <button
                     className={`${styles.btn} ${styles.ghost}`}
