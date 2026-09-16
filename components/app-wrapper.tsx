@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, type ReactNode } from 'react';
-import type { User } from '@/lib/types';
-import { getUser, clearUser } from '@/lib/storage';
+import { type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 import Nav from './nav';
 
 interface AppWrapperProps {
@@ -11,17 +10,11 @@ interface AppWrapperProps {
 }
 
 export default function AppWrapper({ children }: AppWrapperProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, signOut } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const stored = getUser();
-    setUser(stored);
-  }, []);
-
-  const handleSignOut = () => {
-    clearUser();
-    setUser(null);
+  const handleSignOut = async () => {
+    await signOut();
     router.push('/');
   };
 
