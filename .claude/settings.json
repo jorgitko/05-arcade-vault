@@ -1,5 +1,19 @@
 {
   "hooks": {
-    "AfterWrite": "npm run format -- \"$HOOK_FILE\" && npm run lint:fix -- \"$HOOK_FILE\""
+    "PostToolBatch": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run format -- \"$HOOK_FILE\""
+          },
+          {
+            "type": "command",
+            "command": "npm run lint:fix -- \"$HOOK_FILE\""
+          }
+        ]
+      }
+    ]
   }
 }
