@@ -6,7 +6,7 @@
 
 ## Objetivo
 
-Migrar autenticación, usuarios y puntuaciones de localStorage a Supabase con Auth (email + Google/Discord OAuth), tablas users/scores con RLS, y mantener juegos hardcoded.
+Migrar autenticación, usuarios y puntuaciones de localStorage a Supabase con Auth (email/password), tablas users/scores con RLS, y mantener juegos hardcoded.
 
 ## Scope
 
@@ -18,13 +18,12 @@ Migrar autenticación, usuarios y puntuaciones de localStorage a Supabase con Au
   - Setup cliente @supabase/ssr en Next.js 16
 - **Auth Supabase:**
   - Email/password signup + login
-  - OAuth Google + Discord
   - Session management automático
-  - Modificar `/auth` para usar Supabase Auth
+  - Modificar `/auth` para usar Supabase Auth (quitar botones OAuth de la UI)
 - **Schema DB:**
-  - Tabla `users` (id uuid, name, email, created_at)
+  - Tabla `users` (id uuid = auth.users.id, name, created_at) — el email vive solo en `auth.users`
   - Tabla `scores` (id, user_id FK NOT NULL, game_id text, score int, created_at)
-  - RLS policies: SELECT public, INSERT solo auth user
+  - RLS policies: SELECT público en `users` y `scores`, INSERT solo el propio auth user
 - **Migrations:** 2 archivos SQL (01_create_users.sql, 02_create_scores.sql)
 - **Client integration:**
   - lib/supabase.ts (cliente browser)
@@ -38,6 +37,7 @@ Migrar autenticación, usuarios y puntuaciones de localStorage a Supabase con Au
 
 ### NO incluido
 
+- **OAuth (Google / Discord): descartado por decisión del usuario, solo email/password**
 - Migrar array GAMES a DB (sigue hardcoded lib/data.ts)
 - Realtime subscriptions (leaderboards fetch estático)
 - API Routes Next.js (client directo a Supabase)
@@ -51,20 +51,23 @@ Migrar autenticación, usuarios y puntuaciones de localStorage a Supabase con Au
 
 ### Tabla `users`
 
+El `id` referencia `auth.users(id)`. El email NO se duplica aquí: vive en `auth.users`, accesible vía sesión.
+
 ```sql
 CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
 -- RLS policies
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users read own data"
+-- SELECT público: el leaderboard necesita el name de cualquier user.
+-- Seguro porque la tabla no contiene datos sensibles (email queda en auth.users).
+CREATE POLICY "Users readable by all"
   ON users FOR SELECT
-  USING (auth.uid() = id);
+  USING (true);
 
 CREATE POLICY "Users insert own data"
   ON users FOR INSERT
@@ -105,10 +108,10 @@ CREATE POLICY "Users insert own scores"
 // Mantener tipos existentes Game, GameCategory, etc.
 
 // Reemplazar User interface
+// Fila de la tabla users. El email no está aquí: se lee de la sesión de auth.
 export interface User {
-  id: string; // UUID Supabase
+  id: string; // UUID Supabase (= auth.users.id)
   name: string;
-  email: string;
   created_at: string;
 }
 
@@ -157,19 +160,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
 - Crear `.env.local` con NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY
 - Agregar `.env*.local` a .gitignore (verificar ya existe)
 
-### 2. Setup OAuth providers
+### 2. Configurar Auth email/password
 
-- Supabase dashboard → Authentication → Providers
-- Habilitar Google OAuth: crear OAuth app Google Cloud Console, copiar client ID/secret a Supabase
-- Habilitar Discord OAuth: crear OAuth app Discord Developer Portal, copiar client ID/secret a Supabase
-- Configurar redirect URLs: `https://xxx.supabase.co/auth/v1/callback`
-- Probar redirect local: `http://localhost:3000/auth/callback` agregado a allowed URLs
+- Supabase dashboard → Authentication → Providers → Email habilitado
+- Desactivar "Confirm email" (signup directo, sin verificación)
+- URL Configuration → Site URL: `http://localhost:3000`
+- No se configura ningún provider OAuth
 
 ### 3. Migrations schema
 
 - Crear `supabase/migrations/20260915000001_create_users.sql`:
-  - Tabla users (id, name, email, created_at)
-  - RLS enable + policies (read own, insert own)
+  - Tabla users (id FK auth.users, name, created_at)
+  - RLS enable + policies (read all, insert own)
 - Crear `supabase/migrations/20260915000002_create_scores.sql`:
   - Tabla scores (id, user_id FK, game_id, score, created_at)
   - Índices (game_id, game_id+score DESC, user_id)
@@ -198,21 +200,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
   - **Login tab:** `supabase.auth.signInWithPassword({ email, password })`
   - **Signup tab:**
     - `supabase.auth.signUp({ email, password })`
-    - Después signup exitoso: INSERT en tabla users `{ id: user.id, name, email }`
-  - **OAuth buttons:**
-    - `supabase.auth.signInWithOAuth({ provider: 'google' })` (redirect automático)
-    - `supabase.auth.signInWithOAuth({ provider: 'discord' })`
+    - Después signup exitoso: INSERT en tabla users `{ id: user.id, name }`
+  - **Quitar botones OAuth** (Google/Discord) de la UI y su separador
   - Success: redirect `/` (biblioteca)
   - Errors: toast con mensaje error
 
-### 7. Auth callback route
-
-- Crear `app/(app)/auth/callback/route.ts`:
-  - Server route handler GET
-  - `createServerClient` de @supabase/ssr
-  - `supabase.auth.exchangeCodeForSession(code)`
-  - Después session: verificar existe user en tabla users, si no crear con auth metadata (name de provider)
-  - Redirect a `/`
+### 7. (eliminado — callback route solo era necesaria para OAuth)
 
 ### 8. Auth state global
 
@@ -274,8 +267,6 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
 - Jugar juego → guardar score → ver en leaderboard detalle
 - Ver salón fama → tabs juegos → verificar scores
 - Logout → verificar navbar cambia
-- Login OAuth Google → verificar funciona redirect
-- Login OAuth Discord → verificar funciona redirect
 - Revisar Supabase dashboard: tabla users tiene registros, tabla scores tiene scores
 - Verificar RLS: intentar INSERT score sin auth → debe fallar
 
@@ -289,19 +280,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
 - Agregar sección "Supabase Setup":
   - Crear proyecto
   - Aplicar migrations (SQL Editor)
-  - Configurar OAuth providers
+  - Habilitar Email provider sin confirm email
 - Commit y push
 
 ## Acceptance Criteria
 
 - [ ] Proyecto Supabase creado, URL + anon key en .env.local
-- [ ] OAuth Google y Discord configurados en Supabase dashboard
+- [ ] Auth email/password habilitado en Supabase dashboard, sin confirm email
 - [ ] Migrations aplicadas: tablas users y scores existen con RLS
 - [ ] @supabase/ssr instalado, lib/supabase.ts funciona
 - [ ] Signup email/password crea user en auth + tabla users
 - [ ] Login email/password establece session, navbar muestra user
-- [ ] OAuth Google redirect funciona, crea session y user
-- [ ] OAuth Discord redirect funciona, crea session y user
+- [ ] UI de `/auth` sin botones Google/Discord
 - [ ] Logout limpia session, navbar muestra "ENTRAR"
 - [ ] Modal Game Over guarda score en tabla scores (INSERT)
 - [ ] Leaderboard juego carga scores reales desde DB
@@ -321,13 +311,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
 3. **Client directo (no API routes):** RLS suficiente seguridad, menos código
 4. **FK user_id NOT NULL:** solo users autenticados guardan scores, evita spam
 5. **RLS read all scores:** leaderboards públicos, competitivo
-6. **OAuth Google + Discord:** spec 01 ya tiene botones UI, cumplir diseño
+6. **Sin OAuth:** decisión del usuario (2026-09-16) — solo email/password; se retiran los botones Google/Discord que venían de spec 01
 7. **No email verification:** signup directo, UX más rápido MVP
 8. **Mantener GAMES hardcoded:** migrar a DB es scope diferente, no crítico ahora
 9. **No realtime leaderboards:** fetch estático suficiente MVP, realtime es spec futura
 10. **Tests Playwright:** ya mencionado en spec 01 como futuro, integrar ahora
 11. **Ignorar localStorage actual:** empezar limpio, no migrar datos dev
 12. **Índice game_id + score DESC:** query leaderboard rápida, crítico para UX
+13. **`users` con SELECT público y sin columna email (2026-09-16):** el leaderboard hace JOIN a users para mostrar el name; con RLS "read own" los nombres ajenos saldrían vacíos. Se abre el SELECT y se saca el email de la tabla (queda solo en `auth.users`) para no exponer datos sensibles
 
 ## Decisiones Descartadas
 
@@ -342,15 +333,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
 - **Multiple scores per user per game:** solo un score, simplifica leaderboard (futuro: history)
 - **Soft delete scores:** hard delete CASCADE suficiente
 - **Avatars users:** solo name, avatars es enhancement futuro
+- **OAuth Google / Discord:** descartado, dependencia externa innecesaria para el MVP
 
 ## Riesgos Identificados
 
 | Riesgo                                                 | Mitigación                                                                                |
 | ------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | Next.js 16 breaking changes con @supabase/ssr          | Leer docs @supabase/ssr + Next.js 16, verificar ejemplos oficiales compatibles            |
-| OAuth redirect falla local dev                         | Agregar `http://localhost:3000/auth/callback` a Supabase allowed URLs                     |
 | RLS policies incorrectas permiten acceso no autorizado | Test manual + Playwright verificar user sin auth no puede INSERT scores                   |
 | Session no persiste después refresh                    | @supabase/ssr maneja cookies automático, verificar getSession en AuthProvider             |
 | Leaderboard query lenta con muchos scores              | Índices compuestos (game_id, score DESC), LIMIT 100 suficiente MVP                        |
-| OAuth users sin nombre (metadata provider vacío)       | Callback route genera nombre fallback de email si metadata.name null                      |
 | TypeScript errores tipos Supabase                      | Usar `supabase gen types typescript` generar tipos auto (opcional, manual suficiente MVP) |
