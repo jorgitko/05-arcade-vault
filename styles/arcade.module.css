@@ -1202,31 +1202,16 @@
   border-color: var(--cyan);
   box-shadow: 0 0 12px rgba(0, 245, 255, 0.35);
 }
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 16px 0;
+.auth-error {
   font-family: var(--pixel);
-  font-size: 8px;
-  color: var(--ink-faint);
-  letter-spacing: 0.16em;
-}
-.auth-divider::before,
-.auth-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-}
-.social {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.social .btn {
-  padding: 12px;
   font-size: 9px;
+  line-height: 1.6;
+  color: var(--magenta);
+  text-shadow: 0 0 8px rgba(255, 0, 110, 0.5);
+  border: 1px solid var(--magenta);
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-top: 14px;
 }
 
 /* ===== salón ===== */
