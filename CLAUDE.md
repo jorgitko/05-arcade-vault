@@ -51,11 +51,29 @@ app/
   globals.css   # Tailwind + estilos globales
 ```
 
+## Development Commands
+
+```bash
+npm run dev          # Dev server (puerto 3000)
+npm run build        # Build producción
+npm run start        # Start producción
+npm run lint         # ESLint check
+npm run lint:fix     # ESLint auto-fix
+npm run format       # Prettier format
+npm run format:check # Prettier check sin modificar
+```
+
 ## Key Patterns
 
 - **Fuentes**: Geist Sans + Geist Mono (Google Fonts)
 - **Tema**: Dark mode via className dark:
 - **Layout**: Flexbox con min-h-full responsive
 - **Imágenes**: next/image con lazy loading
+
+## Config
+
+- `.spec-config.yml`: AutoCreateBranch habilitado → `/spec-impl` crea rama automáticamente
+- ESLint 9 + Prettier integrados
+- TypeScript strict mode con paths alias `@/*`
 
 @AGENTS.md
